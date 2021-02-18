@@ -29,33 +29,32 @@ sub new {
 	);
 
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
-=pod
-# I think this is extra code in the received packages
+
 	my %handlers = qw(
+		account_id 0283
+		account_server_info 0AC4
+		actor_action 08C8
+		actor_exists 09FF
+		actor_status_active 0984
+		cart_items_nonstackable 0A0F
+		cart_items_stackable 0993
+		character_status 0229
+		hotkeys 0A00
+		inventory_item_added 0A37
+		inventory_items_nonstackable 0A0D
+		inventory_items_stackable 0991
+		item_appeared 0ADD
+		map_changed 0AC7
+		map_loaded 02EB
+		received_character_ID_and_Map 0AC5
 		received_characters 099D
 		received_characters_info 082D
-		sync_received_characters 09A0
-		account_server_info 0AC4
-		received_character_ID_and_Map 0AC5
-		map_changed 0AC7
-		actor_exists 09FF
-		inventory_item_added 0A37
-		character_status 0229
-		actor_status_active 0984
-		hotkeys 0A00
-		account_id 0283
-		map_loaded 02EB
-		actor_action 08C8
-		inventory_items_nonstackable 0A0D
-		cart_items_nonstackable 0A0F
 		storage_items_nonstackable 0A10
-		inventory_items_stackable 0991
-		cart_items_stackable 0993
 		storage_items_stackable 0995
+		sync_received_characters 09A0
 	);
 
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
-=cut
 
 	return $self;
 }
