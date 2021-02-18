@@ -24,6 +24,13 @@ sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
 
+	my %packets = (
+		'0ADD' => ['item_appeared', 'a4 V v C v2 C2 v C v', [qw(ID nameID type identified x y subx suby amount show_effect effect_type)]],
+	);
+
+	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
+=pod
+# I think this is extra code in the received packages
 	my %handlers = qw(
 		received_characters 099D
 		received_characters_info 082D
@@ -36,7 +43,6 @@ sub new {
 		character_status 0229
 		actor_status_active 0984
 		hotkeys 0A00
-		item_appeared 0ADD
 		account_id 0283
 		map_loaded 02EB
 		actor_action 08C8
@@ -49,6 +55,7 @@ sub new {
 	);
 
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
+=cut
 
 	return $self;
 }
@@ -56,7 +63,7 @@ sub new {
 sub party_users_info {
 	my ($self, $args) = @_;
  	return unless Network::Receive::changeToInGameState();
- 
+
  	$char->{party}{name} = bytesToString($args->{party_name});
 
 	for (my $i = 0; $i < length($args->{playerInfo}); $i += 54) {
